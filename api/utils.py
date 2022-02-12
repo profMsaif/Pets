@@ -6,6 +6,7 @@ this file is going to separate them
 providing convent way to work.
 """
 import uuid
+import json
 import pathlib
 from typing import Dict
 from pets import settings
@@ -62,10 +63,31 @@ def delete_photo(url) -> None:
         # log this
         pass
 
+
 def pets_list_response(count, items):
-    return {"count":count,
-            "items": items}
+    return {"count": count, "items": items}
+
 
 def pet_delete_response(deleted, errors):
-    return {"deleted":deleted,
-            "errors": errors}
+    return {"deleted": deleted, "errors": errors}
+
+
+def pet_upload_photo_response(id, url):
+    return {"id": id, "url": url}
+
+
+def pets_to_json_stdout(objects):
+    """to dict"""
+    data = [
+        {
+            "id": str(object.id),
+            "name": object.name,
+            "type": object.type,
+            "age": object.age,
+            "photos": [photo.url for photo in object.photos.all()],
+            "created_at": str(object.created_at),
+        }
+        for object in objects
+    ]
+
+    return json.dumps({"pets": data})
