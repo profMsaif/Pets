@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _
 from pets.settings import API_KEY
 from rest_framework import HTTP_HEADER_ENCODING, exceptions
 from rest_framework.authentication import BaseAuthentication
+from api.exceptions import UnAuthorizedAccess
 
 
 def get_authorization_header(request) -> bytes:
@@ -52,10 +53,10 @@ class ApiKeyAuthentication(BaseAuthentication):
             msg = _(
                 "Invalid x-api-key header. x-api-key string should not contain invalid characters."
             )
-            raise exceptions.AuthenticationFailed(msg)
+            raise UnAuthorizedAccess(_(msg))
         # if the keys are not the same raise Unauthorized error
         if API_KEY != api_key:
-            raise exceptions.AuthenticationFailed(_("Unauthorized"))
+            raise UnAuthorizedAccess(_(f"Unauthorized"))
         # else pass
         # if the key is generated to each user
         # then the first index of the returned value must be the user
