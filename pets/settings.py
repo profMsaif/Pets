@@ -11,25 +11,28 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from starlette.config import Config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+# upload env variables from .env
+CONFIG = Config(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-oy99c_rlb9np8+j@lr0h1!i4*ua&n%0yi)debymwrv)cus%n^t'
+SECRET_KEY = CONFIG.get("SECRET_KEY", cast=str, default="")
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# upload debug option from environment file, default is False
+DEBUG = CONFIG.get("PROJECT_DEBUG", cast=bool , default=False)
 
-ALLOWED_HOSTS = []
+# open the project for all
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
-
+# adding the rest_frame work
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+
 ]
 
 MIDDLEWARE = [
@@ -72,14 +77,17 @@ WSGI_APPLICATION = 'pets.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
-
+# using postgres database
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'HOST': CONFIG.get("DATABASE_HOST",cast=str),
+        'PORT': CONFIG.get("DATABASE_PORT",cast=int),
+        'USER': CONFIG.get("DATABASE_USER",cast=str),
+        'PASSWORD': CONFIG.get("DATABASE_PASS",cast=str),
+        'NAME': CONFIG.get("DATABASE_NAME",cast=str), 
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -121,3 +129,15 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# setting the api_key in the env file
+API_KEY = CONFIG.get("API_KEY", cast=str, default="api-key")
+API_HOST = CONFIG.get("API_HOST", cast=str, default="localhost")
+API_PORT = CONFIG.get("API_PORT", cast=str, default="localhost")
+API_PROTOCOL = CONFIG.get("API_PROTOCOL", cast=str, default="http")
+# define the domain url
+DOMAIN_URL = f"{API_PROTOCOL}://{API_HOST}:{API_PORT}"
+# define the media folder
+MEDIA_ROOT = BASE_DIR / "img"
+# define the media root url
+MEDIA_URL = '/'
