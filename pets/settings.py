@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ["*"]
 
 # Application definition
 # adding the rest_frame work
+# adding api to the list of installed apps
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'api.apps.ApiConfig',
+
 
 ]
 
@@ -107,6 +110,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# django rest framework settings
+REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 20
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
@@ -139,5 +147,6 @@ API_PROTOCOL = CONFIG.get("API_PROTOCOL", cast=str, default="http")
 DOMAIN_URL = f"{API_PROTOCOL}://{API_HOST}:{API_PORT}"
 # define the media folder
 MEDIA_ROOT = BASE_DIR / "img"
+Path(MEDIA_ROOT).mkdir(parents=True, exist_ok=True)
 # define the media root url
 MEDIA_URL = '/'
