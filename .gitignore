@@ -82,3 +82,5 @@ media
 .idea/**/gradle.xml
 .idea/**/libraries
 
+# ignore img folder content
+img/*
