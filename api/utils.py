@@ -61,3 +61,11 @@ def delete_photo(url) -> None:
         # which shouldn't happen ever
         # log this
         pass
+
+def pets_list_response(count, items):
+    return {"count":count,
+            "items": items}
+
+def pet_delete_response(deleted, errors):
+    return {"deleted":deleted,
+            "errors": errors}
