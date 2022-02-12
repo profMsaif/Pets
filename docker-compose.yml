@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+    db:
+        image: postgres:latest
+        restart: always
+        env_file: 
+            - .env
+        ports:
+            - "${DATABASE_PORT}:${DATABASE_PORT}"
+        environment:
+            - PGPORT=${DATABASE_PORT}
+            - POSTGRES_DB=${DATABASE_NAME}
+            - POSTGRES_USER=${DATABASE_USER}
+            - POSTGRES_PASSWORD=${DATABASE_PASS}
+        volumes:
+          - ./data/db:/var/lib/postgresql/data
+    web:
+      build: .
+      command: python /www/manage.py runserver ${API_HOST}:${API_PORT}
+      volumes:
+        - .:/www
+      network_mode: "host"
+      depends_on:
+        - db
