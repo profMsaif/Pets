@@ -10,7 +10,7 @@ from api import models, serializers, auth, utils
 
 
 class PetsViewSet(viewsets.ModelViewSet):
-    # authentication_classes = [auth.ApiKeyAuthentication]
+    authentication_classes = [auth.ApiKeyAuthentication]
     # no ordering is required
     queryset = models.Pets.objects.all()
     serializer_class = serializers.PetsSerializer

@@ -34,6 +34,7 @@ from io import StringIO
 from typing import Any, Dict, List
 from unittest import TestCase
 from unittest.mock import patch
+from django.conf import settings
 
 from django.core.management import call_command
 from django.urls import reverse
@@ -59,6 +60,8 @@ class PetsAPITests(APITestCase):
     def setUp(self) -> None:
         # create pets object
         models.Pets.objects.create(**{"name": "girl", "age": 1, "type": "cat"})
+        self.client.force_authenticate("", "")
+
 
     def test_create_pet(self):
         """
@@ -163,6 +166,16 @@ class PetsAPITests(APITestCase):
         response = response.json()
         self.assertEqual(response["deleted"], 0)
         self.assertEqual(len(response["errors"]), 1)
+    
+class PetsAPIAuthTests(APITestCase):
+
+    def test_not_auth(self):
+        response = self.client.get(reverse("pets-list"))
+        self.assertEqual(response.status_code , status.HTTP_401_UNAUTHORIZED)
+    
+    def test_auth(self):
+        response = self.client.get(reverse("pets-list"), HTTP_X_API_KEY = settings.API_KEY)
+        self.assertEqual(response.status_code , status.HTTP_200_OK)
 
 
 class CommandTestCase(TestCase):
