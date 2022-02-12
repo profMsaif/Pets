@@ -16,12 +16,12 @@ from rest_framework import HTTP_HEADER_ENCODING, exceptions
 from rest_framework.authentication import BaseAuthentication
 
 
-def get_authorization_header(request)-> bytes:
+def get_authorization_header(request) -> bytes:
     """
     Return request's 'X-API-KEY:' header, as a bytestring.
     Hide some test client ickyness where the header can be unicode.
     """
-    # get the X-API-KEY from the header encode it and return 
+    # get the X-API-KEY from the header encode it and return
     auth = request.META.get("HTTP_X_API_KEY", b"")
     if isinstance(auth, str):
         # Work around django test client oddness
@@ -39,7 +39,7 @@ class ApiKeyAuthentication(BaseAuthentication):
         X-API-KEY: 401f7ac837da42b97f613d789819ff93537bee6a
     """
 
-    def authenticate(self, request)-> Tuple[None,str]:
+    def authenticate(self, request) -> Tuple[None, str]:
         """check if the provided api_key is equal to the
         api_key in the project config
         raise Unauthorized error 401
@@ -59,5 +59,5 @@ class ApiKeyAuthentication(BaseAuthentication):
         # else pass
         # if the key is generated to each user
         # then the first index of the returned value must be the user
-        # who own this token 
+        # who own this token
         return (None, API_KEY)
