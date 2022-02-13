@@ -28,7 +28,7 @@ SECRET_KEY = CONFIG.get("SECRET_KEY", cast=str, default="")
 DEBUG = CONFIG.get("PROJECT_DEBUG", cast=bool , default=False)
 
 # open the project for all
-ALLOWED_HOSTS = [CONFIG.get("ALLOED_HOSTS", cast=str , default="127.0.0.1")]
+ALLOWED_HOSTS = [CONFIG.get("ALLOWED_HOSTS", cast=str , default="127.0.0.1")]
 
 
 # Application definition
