@@ -35,6 +35,13 @@ then run:
 ```
     $ docker-compose up --build -d
 ```
+
+example of post request:
+```
+curl -X POST -H "X-API-KEY":"your api key" -H  "Content-Type: application/json"  -d '{"name": "girl", "type":"cat", "age":6}'  http://127.0.0.1:8000/pets/
+```
+
+
 # deploy 
 - deploy on heroku: coming soon
 - deploy on aws: coming soon
