@@ -21,20 +21,12 @@ services:
       command: >
         sh -c "python manage.py wait_for_db &&
             python manage.py migrate &&
-            python manage.py runserver 0.0.0.0:8000"
+            python manage.py runserver ${API_HOST}:${API_PORT}"
       ports:
-        - "8000:8000"
+        - "${API_PORT}:${API_PORT}"
       volumes:
         - .:/www
       depends_on:
         - db
 
-    proxy:
-      build:
-        context: ./proxy
-      restart: always
-      depends_on:
-        - web
-      ports:
-        - 80:8000
 
