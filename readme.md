@@ -26,9 +26,15 @@ for web service
 ```
     $ git clone https://github.com/profMsaif/Pets.git
     $ cd Pets
+```
+- copy env.example into .env and add your own values 
+```
+    $ cp env.example .env
+```
+then run:
+```
     $ docker-compose up --build -d
 ```
-
 # deploy 
 - deploy on heroku: coming soon
 - deploy on aws: coming soon
