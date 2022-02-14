@@ -13,7 +13,7 @@ jobs:
           envkey_DEBUG: false
           envkey_DATABASE_USER: ${{ secrets.DATABASE_USER}}
           envkey_DATABASE_PASS: ${{ secrets.DATABASE_PASS}}
-          envkey_DATABASE_HOS: ${{ secrets.DATABASE_HOST}}
+          envkey_DATABASE_HOST: ${{ secrets.DATABASE_HOST}}
           envkey_DATABASE_PORT: ${{ secrets.DATABASE_PORT}}
           envkey_DATABASE_NAME: ${{ secrets.DATABASE_NAME}}
           envkey_ALLOWED_HOSTS: ${{ secrets.ALLOWED_HOSTS}}
