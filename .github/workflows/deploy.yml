@@ -4,23 +4,9 @@ on: push
 jobs:
   test:
     runs-on: ubuntu-latest
+    environment: pets-animals
     steps:
       - uses: actions/checkout@v2
-      - name: env
-        run: |
-          touch .env
-          echo DATABASE_USER=${{secrets.DATABASE_USER}} >> .env
-          echo DATABASE_PASS=${{secrets.DATABASE_PASS}} >> .env
-          echo DATABASE_HOST=${{secrets.DATABASE_HOST}} >> .env
-          echo DATABASE_PORT=${{secrets.DATABASE_PORT}} >> .env
-          echo DATABASE_NAME=${{secrets.DATABASE_NAME}} >> .env
-          echo DATABASE_NAME=${{secrets.DATABASE_NAME}} >> .env
-          echo ALLOWED_HOSTS=${{secrets.ALLOWED_HOSTS}} >> .env
-          echo SECRET_KEY=${{secrets.SECRET_KEY}} >> .env
-          echo API_HOST=${{secrets.API_HOST}} >> .env
-          echo API_PORT=${{secrets.API_PORT}} >> .env
-          echo API_KEY=${{secrets.API_KEY}} >> .env
-          cat .env
       - name: Build the stack
         run: docker-compose up -d web
       - name: Test
