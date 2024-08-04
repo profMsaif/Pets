@@ -1,5 +1,5 @@
 # using python3.10 image
-FROM python:3.10-slim
+FROM python:3.13.0rc1-slim
 
 # System deps:
 RUN pip install poetry
