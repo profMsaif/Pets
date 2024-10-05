@@ -7,7 +7,7 @@ jobs:
     environment: pets-animals
     steps:
       - uses: actions/checkout@v2
-      - name: create .nv file
+      - name: create .env file
         uses: SpicyPizza/create-envfile@v1
         with:
           envkey_DEBUG: false
